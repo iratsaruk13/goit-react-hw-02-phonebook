@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { nanoid } from "nanoid";
-import initialContacts from "../../contacts.json";
+import { Container, MainTitle, ContactsTitle } from "./App.styled";
+import {FormContact} from "./FormContact/FormContact";
+import { Contacts } from "./Contacts/Contacts";
+import { FormFilter } from "./Filter/Filter";
+import initialContacts from "../contacts.json";
 
-class App extends Component {
+export class App extends Component {
   state = {
     contacts: initialContacts,
     name: "",
@@ -35,7 +39,7 @@ class App extends Component {
   getContacts = () => {
     const { contacts, filter } = this.state;
     return contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
+      contact.name.includes(filter)
     );
   };
 
@@ -46,29 +50,28 @@ class App extends Component {
   };
 
   render() {
+    const { contacts } = this.state;
+    const filteredContacts = this.getContacts();
     return (
-      <div className="container">
-        <h1>Phonebook</h1>
-        <form addContact={this.addContact}>
-          <div>
-            <label htmlFor="name">Name </label>
-            <input type="text" id="name"  />
-          </div>
-          <div>
-            <label htmlFor="number">Number </label>
-            <input type="tel" id="number"  />
-          </div>
-          <button type="submit">Add contact</button>
-        </form>
-
-        <h2>Contacts</h2>
-        <form onChange={this.onChangeFilter}>
-          <label htmlFor="filter">Find contacts by name </label>
-          <input type="text" id="filter" name="filter" />
-        </form>
-      </div>
+      <Container>
+        <MainTitle>Phonebook</MainTitle>
+        <FormContact addContact={this.addContact} />
+        
+        <ContactsTitle>Contacts</ContactsTitle>
+        <FormFilter 
+        label="Find contacts by name"
+        onChange={this.onChangeFilter} />
+        {contacts.length === 0 ? (
+          <p>You don't have contacts yet</p>
+        ) : (<Contacts
+          options={filteredContacts}
+          removeContact={this.removeContact}
+        />
+        )
+      }
+      </Container>
     );
   }
 }
 
-export default App;
+
