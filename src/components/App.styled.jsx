@@ -9,13 +9,20 @@ const Container = styled.div`
 `;
 
 const MainTitle = styled.h1`
-    font-size: 40px;
-    color: #5c057e;
-`
+  font-size: 40px;
+  color: #5c057e;
+  margin-bottom: 20px;
+`;
 
 const ContactsTitle = styled.h2`
   font-size: 36px;
-    color: #5c057e;
-`
+  color: #5c057e;
+  margin-bottom: 20px;
+`;
 
-export {Container, MainTitle, ContactsTitle}
+const Message = styled.p`
+  font-size: 18px;
+  color: #5c057e;
+`;
+
+export { Container, MainTitle, ContactsTitle, Message };

@@ -1,30 +1,39 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import * as Yup from 'yup';
-import { StyledFormik, StyledForm, FormLabel, FormInput, Error, FormContactBtn } from "./FormContact.styled";
+import PropTypes from "prop-types";
+import * as Yup from "yup";
+import {
+  StyledFormik,
+  StyledForm,
+  FormLabel,
+  FormInput,
+  Error,
+  FormContactBtn,
+} from "./FormContact.styled";
 
 const initialValues = {
-    name: "",
-    number: "",
-}
+  name: "",
+  number: "",
+};
 
 const schema = Yup.object({
-    name: Yup.string().required('The field Name is required'),
-    number: Yup.string().required('The field Number is required')
-    .min(7, 'The number must be at least 7 digits long')
-    .max(14, 'The number can consist of maximum 14 digits')
-})
+  name: Yup.string().required("The field Name is required"),
+  number: Yup.string()
+    .required("The field Number is required")
+    .min(7, "The number must be at least 7 digits long")
+    .max(14, "The number can consist of maximum 14 digits"),
+});
 
-export const FormContact = ({addContact}) => {
-    return(
-        <StyledFormik
-        initialValues={initialValues}
-        validationSchema={schema}
-        onSubmit={(values, {resetForm}) =>{
-            addContact(values.name, values.number);
+export const FormContact = ({ addContact }) => {
+  return (
+    <StyledFormik
+      initialValues={initialValues}
+      validationSchema={schema}
+      onSubmit={(values, { resetForm }) => {
+        addContact(values.name, values.number);
         resetForm();
-    }}>
-        {({ errors, touched }) => (
+      }}
+    >
+      {({ errors, touched }) => (
         <StyledForm>
           <div>
             <FormLabel htmlFor="name">Name:</FormLabel>
@@ -39,11 +48,10 @@ export const FormContact = ({addContact}) => {
           <FormContactBtn type="submit">Add contact</FormContactBtn>
         </StyledForm>
       )}
-        </StyledFormik>
-    )
-}
-
+    </StyledFormik>
+  );
+};
 
 FormContact.propTypes = {
-    addContact: PropTypes.func.isRequired,
-  };
+  addContact: PropTypes.func.isRequired,
+};
